@@ -90,9 +90,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    text-align: center;
     padding: var(--spacing-md);
+    padding-top: 80px; /* Espacio para el header fijo */
 }
 
 .hero::before {
@@ -106,14 +105,23 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.5;
+    opacity: 0.3;
     z-index: 1;
 }
 
-.hero__content {
+.hero__container {
     position: relative;
     z-index: 2;
-    text-align: center;
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero__content {
+    text-align: left;
     color: #fff;
 }
 
@@ -122,6 +130,7 @@ body {
     margin-bottom: var(--spacing-sm);
     animation: fadeInUp 1s ease;
     color: #fff;
+    line-height: 1.2;
 }
 
 .hero__subtitle {
@@ -130,6 +139,27 @@ body {
     opacity: 0.9;
     animation: fadeInUp 1s ease 0.2s both;
     color: #fff;
+    line-height: 1.6;
+}
+
+.hero__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero__photo {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.hero__photo:hover {
+    transform: scale(1.05);
 }
 
 /* Sections */
@@ -344,17 +374,31 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .nav__list {
-        flex-direction: column;
-        gap: var(--spacing-sm);
+    .hero__container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
     }
-    
+
+    .hero__content {
+        text-align: center;
+    }
+
     .hero__title {
         font-size: 2rem;
     }
     
     .hero__subtitle {
         font-size: 1.125rem;
+    }
+
+    .hero__photo {
+        max-width: 300px;
+    }
+    
+    .nav__list {
+        flex-direction: column;
+        gap: var(--spacing-sm);
     }
     
     .section__title {
