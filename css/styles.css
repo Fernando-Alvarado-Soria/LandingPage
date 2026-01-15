@@ -26,9 +26,9 @@
 [data-theme="dark"] {
     --color-text: #f9fafb;
     --color-text-light: #d1d5db;
-    --color-bg: #1a1a2e;
-    --color-bg-alt: #16213e;
-    --color-border: #374151;
+    --color-bg: #212121;
+    --color-bg-alt: #080808;
+    --color-border: #171717;
 }
 
 html {
