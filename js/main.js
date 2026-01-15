@@ -41,3 +41,64 @@ document.querySelectorAll('.skill-card, .project-card').forEach(card => {
     card.style.opacity = '0';
     observer.observe(card);
 });
+
+// Carrusel de proyectos
+const projectsContainer = document.querySelector('.projects');
+const prevBtn = document.querySelector('.carousel-btn--prev');
+const nextBtn = document.querySelector('.carousel-btn--next');
+const projectCards = document.querySelectorAll('.project-card');
+
+let currentIndex = 0;
+const cardsToShow = 3; // Número de cards visibles
+const totalCards = projectCards.length;
+const maxIndex = totalCards - cardsToShow;
+
+// Función para actualizar el carrusel
+function updateCarousel() {
+    const cardWidth = projectCards[0].offsetWidth;
+    const gap = 32; // 2rem en px
+    const offset = -(currentIndex * (cardWidth + gap));
+    projectsContainer.style.transform = `translateX(${offset}px)`;
+    
+    // Deshabilitar botones en los extremos
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === maxIndex;
+    
+    // Agregar estilos visuales a botones deshabilitados
+    if (currentIndex === 0) {
+        prevBtn.style.opacity = '0.5';
+        prevBtn.style.cursor = 'not-allowed';
+    } else {
+        prevBtn.style.opacity = '1';
+        prevBtn.style.cursor = 'pointer';
+    }
+    
+    if (currentIndex === maxIndex) {
+        nextBtn.style.opacity = '0.5';
+        nextBtn.style.cursor = 'not-allowed';
+    } else {
+        nextBtn.style.opacity = '1';
+        nextBtn.style.cursor = 'pointer';
+    }
+}
+
+// Event listeners para los botones
+nextBtn.addEventListener('click', () => {
+    if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateCarousel();
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+    }
+});
+
+// Actualizar carrusel en resize
+window.addEventListener('resize', updateCarousel);
+
+// Inicializar carrusel
+updateCarousel();
