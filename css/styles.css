@@ -18,7 +18,8 @@
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
     --spacing-lg: 4rem;
-    --spacing-xl: 6rem;
+    --spacing-xl: 3rem;
+    --spacing-init: 6rem
 }
 
 html {
@@ -164,12 +165,11 @@ body {
 }
 
 /* Sections */
-.section {
-    padding: var(--spacing-xl) var(--spacing-md);
-}
+
 
 .section--alt {
     background-color: var(--color-bg-alt);
+    padding: var(--spacing-init) 0;
 }
 
 .section {
@@ -186,6 +186,7 @@ body {
     text-align: center;
     margin-bottom: var(--spacing-lg);
     color: var(--color-text);
+    padding: 0;
 }
 
 /* About */
