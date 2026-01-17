@@ -339,42 +339,111 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Tarjetas de habilidades */
-.skill-card {
-    text-align: center;
-    padding: 1.5rem;
+/* Skills - Nuevo diseño de categorías */
+.skills-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.skills-category-card {
     background: var(--color-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-[data-theme="dark"] .skill-card {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+[data-theme="dark"] .skills-category-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.skill-card:hover {
+.skills-category-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-.skill-card__icon {
-    width: 60px;
-    height: 60px;
+[data-theme="dark"] .skills-category-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.skills-category-card__header {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    padding: 2rem;
+    text-align: center;
+}
+
+.skills-category-card__title {
+    font-size: 2rem;
+    color: white;
+    font-weight: 700;
+    margin: 0;
+}
+
+.skills-category-card__content {
+    padding: 2.5rem 2rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: var(--color-bg-alt);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateX(5px);
+    background: var(--color-primary);
+}
+
+.skill-item:hover .skill-item__name {
+    color: white;
+}
+
+.skill-item__icon {
+    width: 48px;
+    height: 48px;
     object-fit: contain;
-    margin-bottom: 1rem;
+    flex-shrink: 0;
 }
 
-.skill-card h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #333;
+.skill-item__name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    transition: color 0.3s ease;
 }
 
-.skill-card p {
-    font-size: 0.9rem;
-    color: #666;
+/* Eliminar estilos antiguos de skills */
+.skills-category {
+    display: none;
 }
+
+.skills-category__title {
+    display: none;
+}
+
+.skills {
+    display: none;
+}
+
+.skill-card {
+    display: none;
+}
+
+
 
 /* Projects Carousel */
 .projects-carousel {
