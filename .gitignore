@@ -1,5 +1,6 @@
 # Carpeta de GitHub
 .github/
+.docs/
 
 # Archivos del sistema
 .DS_Store
