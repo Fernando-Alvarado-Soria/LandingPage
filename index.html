@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/styles.css">
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
 </head>
 <body>
     <!-- Header / Navegación -->
@@ -272,6 +275,11 @@
                             <label for="message">Mensaje</label>
                             <textarea id="message" name="message" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
                         </div>
+                        <!-- reCAPTCHA Widget -->
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LdkVlosAAAAAK0MbMLV8ffQnOS2u3W1kyECHzAf"></div>
+                        </div>
+
                         <button type="submit" class="btn btn--submit">Enviar Mensaje</button>
                     </form>
                 </div>

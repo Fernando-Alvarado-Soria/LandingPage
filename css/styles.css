@@ -595,6 +595,23 @@ body {
 }
 
 /* Contact */
+
+/* reCAPTCHA styling */
+.g-recaptcha {
+    margin: 0 auto;
+    max-width: 304px;
+    transform-origin: 0 0;
+}
+
+/* Responsive reCAPTCHA */
+@media (max-width: 768px) {
+    .g-recaptcha {
+        transform: scale(0.85);
+        transform-origin: 0 0;
+    }
+}
+
+
 .contact-container {
     display: grid;
     grid-template-columns: 1fr 1fr;

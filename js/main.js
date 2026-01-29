@@ -129,17 +129,16 @@ updateCarousel();
 
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
-    publicKey: 'TU_PUBLIC_KEY_AQUI',  // Obtén esto de tu cuenta EmailJS
-    serviceID: 'TU_SERVICE_ID_AQUI',   // ID del servicio de email configurado
-    templateID: 'TU_TEMPLATE_ID_AQUI'  // ID de la plantilla creada
+    publicKey: 'myd66Kz6tSMShWkpr', // key EmailJS
+    serviceID: 'service_qa6wz2t', // ID del servicio de email configurado
+    templateID: 'template_0ex74lk' // ID de la plantilla creada
 };
 
-// Google Sheets Configuration (Opcional)
+// Google Sheets Configuration
 const GOOGLE_SHEETS_CONFIG = {
-    apiKey: 'TU_GOOGLE_API_KEY_AQUI',
-    spreadsheetId: 'TU_SPREADSHEET_ID_AQUI',
-    sheetName: 'Contactos'  // Nombre de la hoja dentro del spreadsheet
+    webAppUrl: 'https://script.google.com/macros/s/AKfycbwl8SH7v2OZGqEXWRVoqILpJYWTaYhKEM--s3W5IEWPlxFEWzg1KZebyU4SITKNl1Qu/exec', // <-- la URL del Apps Script
 };
+
 
 // ============================================
 // Inicializar EmailJS
@@ -212,40 +211,33 @@ document.head.appendChild(style);
 
 // Enviar datos a Google Sheets
 async function sendToGoogleSheets(formData) {
-    try {
-        const { name, email, message } = formData;
-        const timestamp = new Date().toLocaleString('es-MX');
-        
-        // Nota: Esta es una implementación simplificada
-        // Para producción, deberías usar Google Apps Script como intermediario
-        const response = await fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_CONFIG.spreadsheetId}/values/${GOOGLE_SHEETS_CONFIG.sheetName}!A:D:append?valueInputOption=USER_ENTERED&key=${GOOGLE_SHEETS_CONFIG.apiKey}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    values: [[timestamp, name, email, message]]
-                })
-            }
-        );
-        
-        if (!response.ok) {
-            throw new Error('Error al guardar en Google Sheets');
-        }
-        
-        console.log('Datos guardados en Google Sheets exitosamente');
-        return true;
-    } catch (error) {
-        console.error('Error al enviar a Google Sheets:', error);
-        // No fallar todo el proceso si Google Sheets falla
-        return false;
-    }
+  try {
+    if (!GOOGLE_SHEETS_CONFIG.webAppUrl) return false;
+
+    const body = new URLSearchParams({
+      name: formData.name,
+      email: formData.email,
+      message: formData.message
+    });
+
+    await fetch(GOOGLE_SHEETS_CONFIG.webAppUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body
+    });
+
+    console.log('Enviado a Google Sheets (Apps Script).');
+    return true;
+  } catch (error) {
+    console.error('Error al enviar a Google Sheets:', error);
+    return false;
+  }
 }
 
+
 // ============================================
-// FORM SUBMISSION HANDLER
+// FORM SUBMISSION HANDLER CON reCAPTCHA
 // ============================================
 const contactForm = document.getElementById('contact-form');
 const submitButton = contactForm?.querySelector('.btn--submit');
@@ -253,6 +245,14 @@ const submitButton = contactForm?.querySelector('.btn--submit');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Validar reCAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        
+        if (!recaptchaResponse) {
+            showNotification('Por favor completa el reCAPTCHA', 'error');
+            return;
+        }
         
         // Deshabilitar botón durante el envío
         if (submitButton) {
@@ -276,7 +276,6 @@ if (contactForm) {
             }
             
             // 1. Enviar email usando EmailJS
-            console.log('Enviando email...');
             const emailResponse = await emailjs.send(
                 EMAILJS_CONFIG.serviceID,
                 EMAILJS_CONFIG.templateID,
@@ -284,30 +283,31 @@ if (contactForm) {
                     from_name: data.name,
                     from_email: data.email,
                     message: data.message,
-                    to_name: 'Fernando Alvarado', // Tu nombre
+                    to_name: 'Fernando Alvarado',
+                    'g-recaptcha-response': recaptchaResponse
                 }
             );
             
-            console.log('Email enviado exitosamente:', emailResponse);
-            
             // 2. Guardar en Google Sheets (opcional)
-            if (GOOGLE_SHEETS_CONFIG.apiKey && GOOGLE_SHEETS_CONFIG.spreadsheetId) {
-                console.log('Guardando en Google Sheets...');
+            if (GOOGLE_SHEETS_CONFIG.webAppUrl) {
                 await sendToGoogleSheets(data);
             }
             
             // Mostrar mensaje de éxito
             showNotification('¡Mensaje enviado exitosamente! Te contactaré pronto.', 'success');
             
-            // Limpiar formulario
+            // Limpiar formulario y reCAPTCHA
             contactForm.reset();
+            grecaptcha.reset();
             
         } catch (error) {
             console.error('Error al enviar formulario:', error);
             
-            // Mostrar mensaje de error específico
             const errorMessage = error.text || error.message || 'Error al enviar el mensaje. Por favor intenta nuevamente.';
             showNotification(errorMessage, 'error');
+            
+            // Reset reCAPTCHA en caso de error
+            grecaptcha.reset();
             
         } finally {
             // Rehabilitar botón
@@ -319,3 +319,6 @@ if (contactForm) {
         }
     });
 }
+
+
+
