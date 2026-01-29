@@ -149,7 +149,7 @@ body {
     background-color: #1a1a2e;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: space-between;
     justify-content: center;
     padding: var(--spacing-md);
     padding-top: 80px; /* Espacio para el header fijo */
@@ -184,6 +184,9 @@ body {
 .hero__content {
     text-align: left;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .hero__title {
@@ -221,6 +224,35 @@ body {
 
 .hero__photo:hover {
     transform: scale(1.05);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn--primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+}
+
+.btn--primary:active {
+    transform: translateY(-1px);
 }
 
 /* Sections */
