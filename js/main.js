@@ -113,9 +113,11 @@ function updateCarousel() {
         currentIndex = maxIndex;
     }
     
+    // Usar el ancho real de la tarjeta visible
     const cardWidth = projectCards[0].offsetWidth;
-    const gap = 32; // 2rem en px
+    const gap = window.innerWidth <= 768 ? 24 : 32; // 1.5rem en móvil, 2rem en desktop
     const offset = -(currentIndex * (cardWidth + gap));
+    
     projectsContainer.style.transform = `translateX(${offset}px)`;
     
     // Deshabilitar botones en los extremos
@@ -159,9 +161,18 @@ prevBtn.addEventListener('click', () => {
 });
 
 // Actualizar carrusel en resize
-window.addEventListener('resize', updateCarousel);
+window.addEventListener('resize', () => {
+    // Resetear índice si es necesario al cambiar de tamaño
+    const cardsToShow = getCardsToShow();
+    const maxIndex = totalCards - cardsToShow;
+    if (currentIndex > maxIndex) {
+        currentIndex = 0; // Volver al inicio al redimensionar
+    }
+    updateCarousel();
+});
 
 // Inicializar carrusel
+currentIndex = 0; // Asegurar que comience en 0
 updateCarousel();
 
 // ============================================

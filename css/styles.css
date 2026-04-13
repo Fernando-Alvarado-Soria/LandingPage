@@ -1008,13 +1008,14 @@ body {
         display: flex;
         flex-direction: column;
         gap: 0;
-        padding: 0 1rem;
+        padding: 0;
     }
     
     .projects-wrapper {
         order: 1;
         margin-bottom: 2rem;
         width: 100%;
+        padding: 0 1rem;
     }
     
     .carousel-btn--prev {
@@ -1062,6 +1063,8 @@ body {
     .projects {
         gap: 1.5rem;
         padding: 0;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     .projects .project-card {
