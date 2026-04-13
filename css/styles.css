@@ -994,15 +994,27 @@ body {
         font-size: 1rem;
     }
 
+    /* Eliminar padding lateral del container en sección de proyectos */
+    #proyectos .container {
+        padding: 0;
+    }
+    
+    #proyectos .section__title {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
     .projects-carousel {
         display: flex;
         flex-direction: column;
         gap: 0;
+        padding: 0 1rem;
     }
     
     .projects-wrapper {
         order: 1;
         margin-bottom: 2rem;
+        width: 100%;
     }
     
     .carousel-btn--prev {
@@ -1049,11 +1061,14 @@ body {
 
     .projects {
         gap: 1.5rem;
+        padding: 0;
     }
 
     .projects .project-card {
         flex: 0 0 100%;
         min-width: 100%;
+        width: 100%;
+        margin: 0;
     }
 
     .carousel-btn {
@@ -1064,6 +1079,7 @@ body {
 
     .project-card__image {
         height: 200px;
+        width: 95%;
     }
 
     .project-card__content {
