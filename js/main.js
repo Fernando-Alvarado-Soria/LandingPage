@@ -93,12 +93,26 @@ const nextBtn = document.querySelector('.carousel-btn--next');
 const projectCards = document.querySelectorAll('.project-card');
 
 let currentIndex = 0;
-const cardsToShow = 3; // Número de cards visibles
 const totalCards = projectCards.length;
-const maxIndex = totalCards - cardsToShow;
+
+// Función para obtener el número de cards a mostrar según el tamaño de pantalla
+function getCardsToShow() {
+    if (window.innerWidth <= 768) {
+        return 1; // Móvil: 1 tarjeta
+    }
+    return 3; // Desktop: 3 tarjetas
+}
 
 // Función para actualizar el carrusel
 function updateCarousel() {
+    const cardsToShow = getCardsToShow();
+    const maxIndex = totalCards - cardsToShow;
+    
+    // Ajustar currentIndex si es mayor que maxIndex después de un resize
+    if (currentIndex > maxIndex) {
+        currentIndex = maxIndex;
+    }
+    
     const cardWidth = projectCards[0].offsetWidth;
     const gap = 32; // 2rem en px
     const offset = -(currentIndex * (cardWidth + gap));
@@ -128,6 +142,9 @@ function updateCarousel() {
 
 // Event listeners para los botones
 nextBtn.addEventListener('click', () => {
+    const cardsToShow = getCardsToShow();
+    const maxIndex = totalCards - cardsToShow;
+    
     if (currentIndex < maxIndex) {
         currentIndex++;
         updateCarousel();
